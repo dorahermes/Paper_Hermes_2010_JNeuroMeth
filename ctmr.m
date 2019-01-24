@@ -22,7 +22,7 @@ function varargout = ctmr(varargin)
 
 % Edit the above text to modify the response to help ctmr
 
-% Last Modified by GUIDE v2.5 25-May-2009 11:08:08
+% Last Modified by GUIDE v2.5 24-Jan-2019 09:36:58
 
 % Begin initialization code - DO NOT EDIT
 
@@ -770,5 +770,3 @@ function select_view_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
