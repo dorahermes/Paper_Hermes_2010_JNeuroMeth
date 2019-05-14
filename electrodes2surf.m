@@ -89,7 +89,7 @@ dataOut=data.gsStruct;
 %outputdir= spm_select(1,'dir','select output directory');
 outputdir=['./data/'];
 for filenummer=1:100
-    outputnaam=strcat([outputdir subject '_electrodesOnsurface' int2str(filenummer)...
+    outputnaam = fullfile(outputdir,[subject '_electrodesOnsurface' int2str(filenummer)...
         '_' int2str(index) '.img']);
     dataOut.fname=outputnaam;
 

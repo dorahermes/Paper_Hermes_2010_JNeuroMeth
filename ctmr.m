@@ -676,9 +676,9 @@ function save_els_Callback(hObject, eventdata, handles)
 dataOut=handles.data.ctStruct;
 outputdir= spm_select(1,'dir','select output directory');
     
-for filenummer=1:100
-    outputnaam=strcat([outputdir 'electrodes' int2str(filenummer) '.img']);
-    dataOut.fname=outputnaam;
+for filenummer = 1:100
+    outputnaam = fullfile(outputdir,['electrodes' int2str(filenummer) '.img']);
+    dataOut.fname = outputnaam;
 
     if ~exist(dataOut.fname)
         set(handles.display_feedback,'String',strcat(['saving ' outputnaam]));
