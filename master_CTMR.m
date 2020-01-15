@@ -28,7 +28,8 @@ get_mask_V2('name',... % subject name
     'r',... % 'l' for left 'r' for right
     13,0.2); % settings for smoothing and threshold
 
-% if using freesurfer: (not always nice)
+% if using freesurfer, create the t1_class.nii by running: 
+%   mri_convert ribbon.mgz t1_class.nii
 get_mask_V3('name',... % subject name
     './data/t1_class.nii',... % freesurfer class file
     './',... % where you want to safe the file
