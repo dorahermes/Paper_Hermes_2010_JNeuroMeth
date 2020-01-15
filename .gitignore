@@ -7,6 +7,7 @@ bin-release/
 
 # Other files and folders
 .settings/
+.DS_store
 
 # Do not safe matlab backup scripts 
 .m~

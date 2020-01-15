@@ -128,13 +128,42 @@ gen_cortex_click_V1('name',0.3,2,.98);
 % from ITK
 gen_cortex_click_V2('name',0.4,[15 3],'r'); 
 
-% from freesurfer
+% from freesurfer (option 1)
 gen_cortex_click_V3('name_R',0.4,[15 3],'r'); 
 gen_cortex_click_V3('name_L',0.4,[15 3],'l'); 
 
+% from freesurfer (option 2) 
+% it is also possible to create and render a gifti file directly from the
+% freesurfer pial by running the next line in the terminal
+    % mris_convert lh.pial lh.pial.gii
+% IMPORTANT: this lh.pial.gii is in Freesurfer coordinates, we want pre-op
+% T1 coordinates, like out electrodes, we get those now:
+    
+% load the Freesurfer gifti (freesurfer coordinates)
+g = gifti('lh.pial.gii');
+
+% convert from freesurfer space to original space
+mri_orig = (['/freesurfer subjects path/mri/orig.mgz']);
+orig = MRIread(mri_orig);
+Torig = orig.tkrvox2ras;
+Norig = orig.vox2ras;
+freeSurfer2T1 = Norig*inv(Torig);
+
+% convert freesurfer vertices to original T1 space
+vert_mat = double(([g.vertices ones(size(g.vertices,1),1)])');
+vert_mat = freeSurfer2T1*vert_mat;
+vert_mat(4,:) = [];
+vert_mat = vert_mat';
+g.vertices = vert_mat; clear vert_mat
+
+% save as a gifti
+gifti_name = ['T1w_pial.L.surf.gii'];
+
+save(g,gifti_name,'Base64Binary')
+
 
 %% 7) plot electrodes on surface 
-% load cortex
+% Option 1: load cortex made with gen_cortex_click
 load(['./data/name_cortex.mat']);
 % load(['./data_spm/name_cortex.mat']);
 % load electrodes on surface
@@ -153,5 +182,16 @@ r2=[1:length(elecmatrix)];% example value to plot
 max = length(elecmatrix); % maximum for scaling
 el_add_sizable(elecmatrix,r2,max)
 
+% Option 2: load gifti cortex
+g = gifti(gifti_name);
+load(['./data/name_electrodes_surface_loc_all1.mat']);
+
+% plot projected electrodes:
+ecog_RenderGifti(g) % generates cortex rendering
+el_add(elecmatrix,'g',30);
+% or maybe add numbers:
+label_add(elecmatrix);
+% adjust view
+loc_view(90,0)
 
 
