@@ -23,6 +23,7 @@ function varargout = ctmr(varargin)
 % Edit the above text to modify the response to help ctmr
 
 % Last Modified by GUIDE v2.5 24-Jan-2019 09:36:58
+% Modified by HH 2/2021 (view_results_Callback)
 
 % Begin initialization code - DO NOT EDIT
 
@@ -664,8 +665,30 @@ function view_results_Callback(hObject, eventdata, handles)
 
 p=spm_imatrix(handles.data.ctStruct.mat);
 xvalues=sign(p(7))*xvalues;
-figure
-plot3(xvalues,yvalues,zvalues,'.','markerSize',20);
+figure; 
+if handles.data.view == 1
+    plot3(xvalues,yvalues,zvalues,'r.','markerSize',12);
+    axis equal
+    xlim([0, size(handles.data.elecMap, 1)]); ylim([0, size(handles.data.elecMap, 2)]); zlim([0, size(handles.data.elecMap, 3)]);
+    view(90, 90);
+    xlabel('left->right'); ylabel('post->ant'); zlabel('inf->sup');
+    
+elseif handles.data.view == 2 % swap x, z axes
+    plot3(zvalues,yvalues,xvalues,'r.','markerSize',12);
+    axis equal
+    xlim([0, size(handles.data.elecMap, 3)]); ylim([0, size(handles.data.elecMap, 2)]); zlim([0, size(handles.data.elecMap, 1)]);
+    set(gca, 'Zdir', 'reverse'); % values increase top-down
+    view(0, 0);
+    xlabel('inf->sup'); ylabel('post->ant'); zlabel('left->right');
+    
+elseif handles.data.view == 3
+    plot3(zvalues,xvalues,yvalues,'r.','markerSize',12);
+    axis equal
+    xlim([0, size(handles.data.elecMap, 3)]); ylim([0, size(handles.data.elecMap, 1)]); zlim([0, size(handles.data.elecMap, 2)]);
+    set(gca, 'Zdir', 'reverse'); % values increase top-down
+    view(0, 0);
+    xlabel('inf->sup'); ylabel('left->right'); zlabel('ant->post');
+end
 
 
 % --- Executes on button press in save_els - SAVE button.
