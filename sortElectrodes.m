@@ -38,6 +38,8 @@ temp.Z=data1.elecXYZ(:,3);
 
 figure;
 plot3(temp.X,temp.Y,temp.Z,'.','MarkerSize',20);
+axis equal;
+xlabel('x'); ylabel('y'); zlabel('z');
 hold on;
 h=datacursormode;
 
