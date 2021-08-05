@@ -664,7 +664,7 @@ function view_results_Callback(hObject, eventdata, handles)
     find(handles.data.elecMap>1.5));
 
 p=spm_imatrix(handles.data.ctStruct.mat);
-xvalues=sign(p(7))*xvalues;
+%xvalues=sign(p(7))*xvalues;
 figure; 
 if handles.data.view == 1
     plot3(xvalues,yvalues,zvalues,'r.','markerSize',12);
