@@ -379,7 +379,7 @@ if handles.data.view==1
         if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(:,1,1))-5 && ...
             xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,:,1))-5 % I do not know for sure whether X and Y are correct here
             % if already an electrode in that position remove
-            if handles.data.elecMap(round(xy(1,2)),round(xy(1,1)),round(get(handles.slider1,'Value')))>0;
+            if handles.data.elecMap(round(xy(1,2)),round(xy(1,1)),round(get(handles.slider1,'Value')))>0
                 removeElec(hObject, eventdata, handles,xy);
             else
                 drawElec(hObject, eventdata, handles,xy);
@@ -395,7 +395,7 @@ elseif handles.data.view==2
         if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(:,1,1))-5 && ...
             xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,1,:))-5 % I do not know for sure whether X and Y are correct here
             % if already an electrode in that position remove
-            if handles.data.elecMap(round(xy(1,2)),round(get(handles.slider1,'Value')),round(xy(1,1)))>0;
+            if handles.data.elecMap(round(xy(1,2)),round(get(handles.slider1,'Value')),round(xy(1,1)))>0
                 removeElec(hObject, eventdata, handles,xy);
             else
                 drawElec(hObject, eventdata, handles,xy);
@@ -411,7 +411,7 @@ elseif handles.data.view==3
         if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(1,:,1))-5 && ...
             xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,1,:))-5 % I do not know for sure whether X and Y are correct here
             % if already an electrode in that position remove
-            if handles.data.elecMap(round(get(handles.slider1,'Value')),round(xy(1,2)),round(xy(1,1)))>0;
+            if handles.data.elecMap(round(get(handles.slider1,'Value')),round(xy(1,2)),round(xy(1,1)))>0
                 removeElec(hObject, eventdata, handles,xy);
             else
                 drawElec(hObject, eventdata, handles,xy);
@@ -720,6 +720,9 @@ function load_els_Callback(hObject, eventdata, handles)
 [els]=spm_select(1,'image','load electrodes.img file');
 elsStruct=spm_vol(els);
 [handles.data.elecMap]=spm_read_vols(elsStruct);
+
+tol = 0.1; % electrode values under this number are wiped (they should be either 1 or 2)
+handles.data.elecMap(handles.data.elecMap < tol) = 0;
 
 guidata(hObject,handles);
 imageUpdate(hObject,eventdata,handles);
