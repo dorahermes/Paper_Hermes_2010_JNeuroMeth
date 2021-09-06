@@ -363,62 +363,49 @@ function figure1_WindowButtonDownFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-a=get(hObject,'CurrentPoint');
-b=get(handles.axes1,'Position');
+% a=get(hObject,'CurrentPoint');
+% b=get(handles.axes1,'Position');
 % c=get(handles.axes2,'Position');
 % d=get(handles.axes3,'Position');
 if handles.data.view==1
-    if a(1)>b(1) && a(1)<b(1)+b(3) && a(2)>b(2) && a(2)<b(2)+b(4)
-        % checks:
-        %position.axes1=[a(1)-b(1) a(2)-b(2)]
-        %get(handles.axes1,'CurrentPoint') 
 
-        xy=get(handles.axes1,'CurrentPoint'); %current point x and y
+    xy=get(handles.axes1,'CurrentPoint'); %current point x and y
 
-        %check for click within image
-        if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(:,1,1))-5 && ...
-            xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,:,1))-5 % I do not know for sure whether X and Y are correct here
-            % if already an electrode in that position remove
-            if handles.data.elecMap(round(xy(1,2)),round(xy(1,1)),round(get(handles.slider1,'Value')))>0
-                removeElec(hObject, eventdata, handles,xy);
-            else
-                drawElec(hObject, eventdata, handles,xy);
-            end
+    %check for click within image
+    if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(:,1,1))-5 && ...
+        xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,:,1))-5 % I do not know for sure whether X and Y are correct here
+        % if already an electrode in that position remove
+        if handles.data.elecMap(round(xy(1,2)),round(xy(1,1)),round(get(handles.slider1,'Value')))>0
+            removeElec(hObject, eventdata, handles,xy);
+        else
+            drawElec(hObject, eventdata, handles,xy);
         end
-    else
-        set(handles.display_feedback,'String','mis');
     end
+        
 elseif handles.data.view==2
-    if a(1)>b(1) && a(1)<b(1)+b(3) && a(2)>b(2) && a(2)<b(2)+b(4)
-       xy=get(handles.axes1,'CurrentPoint'); %current point x and y
-        %check for click within image
-        if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(:,1,1))-5 && ...
-            xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,1,:))-5 % I do not know for sure whether X and Y are correct here
-            % if already an electrode in that position remove
-            if handles.data.elecMap(round(xy(1,2)),round(get(handles.slider1,'Value')),round(xy(1,1)))>0
-                removeElec(hObject, eventdata, handles,xy);
-            else
-                drawElec(hObject, eventdata, handles,xy);
-            end
+   xy=get(handles.axes1,'CurrentPoint'); %current point x and y
+    %check for click within image
+    if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(:,1,1))-5 && ...
+        xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,1,:))-5 % I do not know for sure whether X and Y are correct here
+        % if already an electrode in that position remove
+        if handles.data.elecMap(round(xy(1,2)),round(get(handles.slider1,'Value')),round(xy(1,1)))>0
+            removeElec(hObject, eventdata, handles,xy);
+        else
+            drawElec(hObject, eventdata, handles,xy);
         end
-    else
-        set(handles.display_feedback,'String','mis');
     end
+
 elseif handles.data.view==3
-    if a(1)>b(1) && a(1)<b(1)+b(3) && a(2)>b(2) && a(2)<b(2)+b(4)
-       xy=get(handles.axes1,'CurrentPoint'); %current point x and y
-        %check for click within image
-        if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(1,:,1))-5 && ...
-            xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,1,:))-5 % I do not know for sure whether X and Y are correct here
-            % if already an electrode in that position remove
-            if handles.data.elecMap(round(get(handles.slider1,'Value')),round(xy(1,2)),round(xy(1,1)))>0
-                removeElec(hObject, eventdata, handles,xy);
-            else
-                drawElec(hObject, eventdata, handles,xy);
-            end
+   xy=get(handles.axes1,'CurrentPoint'); %current point x and y
+    %check for click within image
+    if xy(1,2)>5 && xy(1,2)<=length(handles.data.ctData(1,:,1))-5 && ...
+        xy(1,1)>5 && xy(1,1)<=length(handles.data.ctData(1,1,:))-5 % I do not know for sure whether X and Y are correct here
+        % if already an electrode in that position remove
+        if handles.data.elecMap(round(get(handles.slider1,'Value')),round(xy(1,2)),round(xy(1,1)))>0
+            removeElec(hObject, eventdata, handles,xy);
+        else
+            drawElec(hObject, eventdata, handles,xy);
         end
-    else
-        set(handles.display_feedback,'String','mis');
     end
 end
  %     imshow(handles.data.elecMap(:,:,round(get(handles.slider1,'Value'))),...
